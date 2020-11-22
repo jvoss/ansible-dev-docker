@@ -1,4 +1,5 @@
 # Ansible Development Docker
+![Docker image](https://github.com/jvoss/ansible-dev-docker/workflows/Docker%20image/badge.svg)
 
 The purpose of this docker container is to create containerized and repeatable Ansible environments for developing playbooks. Everytime the image is built, a clean, fully updated environment is created.
 
@@ -18,7 +19,7 @@ The purpose of this docker container is to create containerized and repeatable A
 
 ## Usage
 
-This container is intended to have your ansible workingspace mounted to
+This container is intended to have your ansible workspace mounted to
 `/ansible`. When the image is started interactively, the user is presented
 at a bash shell in this working directory.
 
