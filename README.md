@@ -12,7 +12,7 @@ developing playbooks.
 
 1. Clone to local machine
    
-    `git clone https://github.com/jvoss/ansible-dev-docker`
+    `git clone https://github.com/jvoss/ansible-dev-docker.git`
 
 2. Change directory
 
