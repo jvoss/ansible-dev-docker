@@ -1,8 +1,7 @@
 FROM ubuntu:latest
 
 LABEL maintainer="jvoss@onvox.net"
-LABEL version="0.1"
-LABEL description="Custom image for Ansible development"
+LABEL description="Containerized Ansible installations for development"
 
 # Disable prompt during package installation
 ARG DEBIAN_FRONTEND=noninteractive
