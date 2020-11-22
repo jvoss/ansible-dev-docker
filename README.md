@@ -5,7 +5,7 @@ The purpose of this docker container is to create containerized and repeatable
 Ansible environments for developing playbooks. Everytime the image is built, a 
 clean, fully updated environment is created.
 
-This image is built on Ubuntu for specifically for interactive useability for
+This image is built on Ubuntu for specifically for interactive useability while
 developing playbooks.
 
 ## Building an image
