@@ -29,7 +29,8 @@ ENV pip_packages "ansible paramiko"
 RUN pip3 install $pip_packages
 
 # Initialize workspace
-RUN useradd -ms /bin/bash -d /ansible ansible
+RUN useradd -ms /bin/bash ansible
+RUN mkdir /ansible && chown ansible:ansible /ansible
 
 USER ansible
 WORKDIR /ansible
