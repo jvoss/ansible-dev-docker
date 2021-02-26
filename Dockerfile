@@ -13,6 +13,7 @@ RUN apt update && apt-get upgrade --yes
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
        apt-utils \
+       git \
        locales \
        libyaml-dev \
        python3-setuptools \
