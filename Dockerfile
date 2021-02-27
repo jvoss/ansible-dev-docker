@@ -29,7 +29,7 @@ RUN apk add --no-cache bash dumb-init git python3 py3-pip su-exec;\
     fi && pip3 install paramiko; \
     apk del --no-cache --purge .build-dependencies; \
     rm -rf /var/cache/apk/* && rm -rf /root/.cache && rm -rf /root/.cargo; \
-    adduser -s /bin/bash -D -h /ansible --no-create-home ansible; \
+    adduser -s /bin/bash -D -h /home/ansible ansible; \
     mkdir /ansible && chown ansible:ansible /ansible 
 
 WORKDIR /ansible
