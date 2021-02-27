@@ -45,4 +45,4 @@ at a bash shell in this working directory.
 
 Ephemeral environments can be started using the following example:
 
-`docker run -it -rm -v /local-path/to/playbooks:/ansible ansible-dev-docker`
+`docker run -it --rm -v /local-path/to/playbooks:/ansible ansible-dev-docker`
