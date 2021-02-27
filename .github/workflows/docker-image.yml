@@ -7,12 +7,38 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build-latest:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      - name: Build Docker image
+      - name: Build Ansible latest Docker image
         run: docker build . --file Dockerfile
+
+  build-v3-0-0:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         
+      - name: Build Ansible 3.0.0 Docker image
+        run: docker build . --file Dockerfile --build-arg ANSIBLE_VERSION=3.0.0
+
+  build-v2-9-18:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Build Ansible 2.9.18 Docker image
+        run: docker build . --file Dockerfile --build-arg ANSIBLE_VERSION=2.9.18
+        
+  build-v2-8-19:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Build Ansible 2.8.19 Docker image
+        run: docker build . --file Dockerfile --build-arg ANSIBLE_VERSION=2.8.19

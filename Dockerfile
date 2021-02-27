@@ -1,37 +1,38 @@
-FROM ubuntu:latest
+ARG ALPINE_VERSION=latest
+
+FROM alpine:${ALPINE_VERSION}
 
 LABEL maintainer="jvoss@onvox.net"
-LABEL description="Containerized Ansible installations for development"
+LABEL description="Containerized Ansible control node for development"
 
-# Disable prompt during package installation
-ARG DEBIAN_FRONTEND=noninteractive
+# Optional Ansible version to install (otherwise latest)
+# example: docker build . --build-arg ANSIBLE_VERSION=2.10.7
+ARG ANSIBLE_VERSION
 
-# Update
-RUN apt update && apt-get upgrade --yes
+# Install tools, dependencies, Ansible
+# Use single layer to squash build size
+RUN apk add --no-cache bash dumb-init git python3 py3-pip su-exec;\
+    apk add --no-cache --virtual .build-dependencies \
+      cargo \
+      gcc \
+      libffi-dev \
+      make \
+      openssl-dev \
+      musl-dev \
+      python3-dev \
+      rust ; \
+    if [ -z "$ANSIBLE_VERSION" ] ; \
+      then \
+        pip3 install ansible; \
+      else \
+        pip3 install ansible==`echo ${ANSIBLE_VERSION} | sed 's/v//g'` ; \
+    fi && pip3 install paramiko; \
+    apk del --no-cache --purge .build-dependencies; \
+    rm -rf /var/cache/apk/* && rm -rf /root/.cache && rm -rf /root/.cargo; \
+    adduser -s /bin/bash -D -h /ansible --no-create-home ansible; \
+    mkdir /ansible && chown ansible:ansible /ansible 
 
-# Install dependencies.
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-       apt-utils \
-       git \
-       locales \
-       libyaml-dev \
-       python3-setuptools \
-       python3-pip \
-       python3-yaml \
-       software-properties-common \
-       rsyslog systemd systemd-cron sudo iproute2 \
-    && rm -Rf /var/lib/apt/lists/* \
-    && rm -Rf /usr/share/doc && rm -Rf /usr/share/man \
-    && apt-get clean
-
-# Install Ansible
-ENV pip_packages "ansible paramiko"
-RUN pip3 install $pip_packages
-
-# Initialize workspace
-RUN useradd -ms /bin/bash ansible
-RUN mkdir /ansible && chown ansible:ansible /ansible
-
-USER ansible
 WORKDIR /ansible
+
+ENTRYPOINT ["/usr/bin/dumb-init", "su-exec",  "ansible"]
+CMD ["/bin/bash"]

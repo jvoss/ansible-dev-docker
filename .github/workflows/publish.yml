@@ -1,0 +1,49 @@
+name: Publish to Docker registries
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Publish latest to Docker Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: jpvoss/ansible-dev-docker
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          buildargs: "ANSIBLE_VERSION=${{ env.RELEASE_VERSION }}"
+          tags: "latest"
+
+      - name: Publish Ansible v3.0.0 to Docker Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: jpvoss/ansible-dev-docker
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          buildargs: "ANSIBLE_VERSION=3.0.0"
+          tags: "3.0.0"
+
+      - name: Publish Ansible v2.9.18 to Docker Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: jpvoss/ansible-dev-docker
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          buildargs: "ANSIBLE_VERSION=2.9.18"
+          tags: "2.9.18"
+
+      - name: Publish Ansible v2.8.18 to Docker Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: jpvoss/ansible-dev-docker
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          buildargs: "ANSIBLE_VERSION=2.9.19"
+          tags: "2.8.19"
